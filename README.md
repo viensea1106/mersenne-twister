@@ -1,0 +1,3 @@
+# Cracking Mersenne Twister Generator - mt19937
+
+update later...
