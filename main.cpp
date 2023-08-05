@@ -13,13 +13,13 @@ uint32_t generate_seed() {
 
     int fd = open("/dev/random", O_RDONLY);
     if (fd == -1) {
-        perror("Error when open /dev/random");
+        perror("Error when opening /dev/random");
         exit(EXIT_FAILURE);
     }
 
     ssize_t n = read(fd, &seed, sizeof(seed));
     if (n != sizeof(seed)) {
-        perror("Erro when read /dev/random");
+        perror("Error when reading /dev/random");
         exit(EXIT_FAILURE);
     }
 
@@ -43,6 +43,7 @@ int main() {
 
 
     ///////////////////////////////////// Stage 2 /////////////////////////////////////
+
     printf("[*] Stage 2: Recovers the state from an MT19937 instance using 624(=N) outputs.\n");
     // NOTE: No twist should have been performed during the outputs.
 
@@ -51,6 +52,7 @@ int main() {
         outputs[i] = mt19937_cpp();
 
     MT19937 cracked = mt19937_cracker(outputs);
+    
     printf("[+] Next 10 outputs:\n");
     for (int i=0; i<10; ++i) {
         u_int32_t r1=mt19937_cpp(), r2=mt19937_rand(&cracked);
